@@ -34,7 +34,15 @@ window.lino_vis_redraw = (selection) ->
             class: (item) -> "item #{item.type}"
         
     items.filter((item) -> item.text?)
-        .html((item) -> item.text)
+        .html (item) ->
+            if item.type is 'token'
+                # replace breaking characters to avoid a line break inside the token
+                return item.text
+                    .replace(new RegExp(' ', 'g'), '&nbsp;')
+                    .replace(new RegExp('-', 'g'), '&#8209;') # non-breaking hyphen
+                
+            #else
+            return item.text
     
     
     # adpat the svg to the div

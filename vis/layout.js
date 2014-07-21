@@ -32,6 +32,9 @@
     items.filter(function(item) {
       return item.text != null;
     }).html(function(item) {
+      if (item.type === 'token') {
+        return item.text.replace(new RegExp(' ', 'g'), '&nbsp;').replace(new RegExp('-', 'g'), '&#8209;');
+      }
       return item.text;
     });
     html_bbox = html.node().getBoundingClientRect();
