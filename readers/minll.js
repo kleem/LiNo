@@ -1,9 +1,11 @@
 (function() {
 
-  window.lino_reader_minll = function(txt) {
+  window.lino_reader_minll = function(txt, title) {
     var header, lino, rows, sentences;
     lino = {
-      metadata: {},
+      metadata: {
+        title: title
+      },
       content: [
         {
           type: 'splitter',

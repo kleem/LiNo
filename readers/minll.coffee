@@ -1,6 +1,8 @@
-window.lino_reader_minll = (txt) ->
+window.lino_reader_minll = (txt, title) ->
     lino = {
-        metadata: {},
+        metadata: {
+            title: title
+        },
         content: [{
             type: 'splitter',
             level: 'document',
