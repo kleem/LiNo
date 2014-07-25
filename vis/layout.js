@@ -11,7 +11,7 @@
       'position': 'absolute'
     });
     selection.append('div').style({
-      'position': 'absolute',
+      'position': 'relative',
       'pointer-events': 'none'
     });
     return selection;

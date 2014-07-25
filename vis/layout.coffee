@@ -14,7 +14,7 @@ window.lino_vis_new = (lino, selection) ->
             
     selection.append('div')
         .style
-            'position': 'absolute'
+            'position': 'relative'
             'pointer-events': 'none' # this is needed to have svg events work
     
     return selection
