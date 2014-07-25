@@ -8,14 +8,29 @@ window.lino_vis_new = (lino, selection) ->
         .attr
             class: 'lino'
             
-    selection.append('svg')
+    svg = selection.append('svg')
         .style
             'position': 'absolute'
             
-    selection.append('div')
+    html = selection.append('div')
         .style
             'position': 'relative'
             'pointer-events': 'none' # this is needed to have svg events work
+    
+    # create symbol definitions
+    defs = svg.append('defs')
+    defs.html '''
+        <path id="pos_noun" d="m -3,-3 6,0 0,6 -6,0 z"/>
+        <path id="pos_verb" d="M -3,-4 4,0 -3,4 z"/>
+        <path id="pos_adjective" d="m -3,-3 0,6 6,0 0,-6 z m 2,2 2,0 0,2 -2,0 z"/>
+        <path id="pos_adverb" d="M -3 -4 L -3 4 L 4 0 L -3 -4 z M -1.4375 -1.5 L 1.1875 0 L -1.4375 1.5 L -1.4375 -1.5 z"/>
+        <path id="pos_pronoun" d="M -3 -3 L -3 -1 L -1 -1 L -1 -3 L -3 -3 z M 1 -3 L 1 -1 L 3 -1 L 3 -3 L 1 -3 z M -3 1 L -3 3 L -1 3 L -1 1 L -3 1 z M 1 1 L 1 3 L 3 3 L 3 1 L 1 1 z"/>
+        <path id="pos_preposition" d="m -1,-6 0,5 2,0 2,0 0,-2 -2,0 0,-3 z"/>
+        <path id="pos_determiner" d="m -1,-6 0,5 2,0 0,-5 z"/>
+        <path id="pos_conjunction" d="m -1,-6 0,3 -2,0 0,2 2,0 0,2 2,0 0,-2 2,0 0,-2 -2,0 0,-3 z"/>
+        <path id="pos_participle" d="M 0 -4.25 L -4.25 0 L 0 4.25 L 4.25 0 L 0 -4.25 z M 0 -1.40625 L 1.40625 0 L 0 1.40625 L -1.40625 0 L 0 -1.40625 z"/>
+        <path id="pos_other" d="m -1,-6 0,2 2,0 0,-2 z"/>
+    '''
     
     return selection
     
