@@ -44,22 +44,27 @@ window.lino_vis_redraw = (selection) ->
     items = html.selectAll('.item')
         .data((lino) -> lino.content)
         
-    items.enter().append('span')
+    # ENTER
+    
+    entered_spans = items.enter().append('span')
         .attr
             class: (item) -> "item #{item.type}"
         
-    items.filter((item) -> item.text?)
+    # tokens must have a ruby element, to support textual annotations that grow the item's bounding box (e.g. lemma)
+    entered_spans.filter((item) -> item.type is 'token').append('ruby').append('rb')
+    
+    # UPDATE
+    
+    items.filter((item) -> item.type is 'token' and item.text?).selectAll('ruby > rb')
         .html (item) ->
-            if item.type is 'token'
-                # replace breaking characters to avoid a line break inside the token
-                return item.text
-                    .replace(new RegExp(' ', 'g'), '&nbsp;')
-                    .replace(new RegExp('-', 'g'), '&#8209;') # non-breaking hyphen
-                
-            #else
+            # replace breaking characters to avoid a line break inside the token
             return item.text
-    
-    
+                .replace(new RegExp(' ', 'g'), '&nbsp;')
+                .replace(new RegExp('-', 'g'), '&#8209;') # non-breaking hyphen
+                
+    items.filter((item) -> item.type isnt 'token' and item.text?)
+        .html (item) -> item.text
+        
     # adpat the svg to the div
     html_bbox = html.node().getBoundingClientRect()
     svg

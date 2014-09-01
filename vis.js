@@ -21,23 +21,28 @@
   };
 
   window.lino_vis_redraw = function(selection) {
-    var html, html_bbox, items, svg;
+    var entered_spans, html, html_bbox, items, svg;
     html = selection.select('div');
     svg = selection.select('svg');
     items = html.selectAll('.item').data(function(lino) {
       return lino.content;
     });
-    items.enter().append('span').attr({
+    entered_spans = items.enter().append('span').attr({
       "class": function(item) {
         return "item " + item.type;
       }
     });
+    entered_spans.filter(function(item) {
+      return item.type === 'token';
+    }).append('ruby').append('rb');
     items.filter(function(item) {
-      return item.text != null;
+      return item.type === 'token' && (item.text != null);
+    }).selectAll('ruby > rb').html(function(item) {
+      return item.text.replace(new RegExp(' ', 'g'), '&nbsp;').replace(new RegExp('-', 'g'), '&#8209;');
+    });
+    items.filter(function(item) {
+      return item.type !== 'token' && (item.text != null);
     }).html(function(item) {
-      if (item.type === 'token') {
-        return item.text.replace(new RegExp(' ', 'g'), '&nbsp;').replace(new RegExp('-', 'g'), '&#8209;');
-      }
       return item.text;
     });
     html_bbox = html.node().getBoundingClientRect();
