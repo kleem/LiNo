@@ -18,7 +18,7 @@ convert_pos = (morpho_code) ->
 window.lino_reader_clavius = (data) ->
     lino = {
         metadata: {
-            title: 'none'
+            title: data.title
         },
         content: [{
             type: 'splitter',

@@ -32,7 +32,7 @@
     var lino;
     lino = {
       metadata: {
-        title: 'none'
+        title: data.title
       },
       content: [
         {
