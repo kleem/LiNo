@@ -1,0 +1,59 @@
+.item.splitter {
+  display: inline-block;
+  width: 14px;
+  height: 20px;
+}
+
+.lino {
+  line-height: 4em;
+  
+  font-family: Georgia;
+  font-size: 18px;
+  
+  text-align: justify;
+  margin: 12px;
+}
+
+.token {
+  fill: #999;
+  shape-rendering: crispEdges;
+}
+.token > ruby {
+  ruby-position: after;
+  -webkit-ruby-position: after;
+}
+.token ruby > rb {
+  padding-bottom: 2px;
+}
+.token ruby > rt {
+  text-align: center;
+  font-size: 10px;
+  font-family: sans-serif;
+  padding-left: 16px;
+  padding-right: 16px;
+  color: #999;
+}
+
+.pos {
+  fill: #2A9DC2;
+}
+.splitter {
+  fill: #999;
+  stroke: #999;
+  shape-rendering: crispEdges;
+}
+.sentence_number {
+  fill: #999;
+  font-family: sans-serif;
+  font-size: 10px;
+  text-anchor: start;
+}
+
+#lino_header {
+  font-family: Georgia;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: center;
+  margin-top: 22px;
+  margin-bottom: 40px;
+}
