@@ -1,6 +1,6 @@
 (function() {
 
-  window.lino_vis_new = function(lino, selection) {
+  window.lino_vis_main_new = function(lino, selection) {
     var defs, html, svg;
     selection.datum(lino);
     selection.style({
@@ -20,7 +20,7 @@
     return selection;
   };
 
-  window.lino_vis_redraw = function(selection) {
+  window.lino_vis_main_redraw = function(selection) {
     var entered_spans, html, html_bbox, items, svg;
     html = selection.select('div');
     svg = selection.select('svg');

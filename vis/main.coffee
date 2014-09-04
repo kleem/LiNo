@@ -1,5 +1,5 @@
 # create a new lino container for the given lino data and d3 selection
-window.lino_vis_new = (lino, selection) ->
+window.lino_vis_main_new = (lino, selection) ->
     selection.datum(lino)
     
     selection
@@ -36,7 +36,7 @@ window.lino_vis_new = (lino, selection) ->
     
     
 # redraw a lino container
-window.lino_vis_redraw = (selection) ->
+window.lino_vis_main_redraw = (selection) ->
     html = selection.select('div')
     svg = selection.select('svg')
     
