@@ -11,6 +11,7 @@ splitter_offset = 6
 
 window.lino_vis_default_new = (lino, container, title_container) ->
   # display the document title
+  title_container.classed('lino_header', true)
   title_container.text lino.metadata.title
   
   lino_vis_main_new(lino, container)

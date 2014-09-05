@@ -16,6 +16,7 @@
   splitter_offset = 6;
 
   window.lino_vis_default_new = function(lino, container, title_container) {
+    title_container.classed('lino_header', true);
     title_container.text(lino.metadata.title);
     lino_vis_main_new(lino, container);
     lino_vis_default_redraw(container);
