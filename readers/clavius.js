@@ -29,7 +29,15 @@
   };
 
   window.lino_reader_clavius = function(data) {
-    var lino;
+    /* index uri references to tokens
+    */
+    var lino, token, tokens_index, _i, _len, _ref;
+    tokens_index = {};
+    _ref = data.tokenization.token;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      token = _ref[_i];
+      tokens_index[token.uri] = token;
+    }
     lino = {
       metadata: {
         title: data.title
@@ -42,20 +50,23 @@
         }
       ]
     };
-    data.sentences.sentence.forEach(function(sentence, i) {
+    data.linguisticAnalysis.sentence.forEach(function(sentence, i) {
       sentence.token.forEach(function(token) {
         lino.content.push({
           type: 'token',
-          text: token.text,
+          text: token.uri in tokens_index ? tokens_index[token.uri].text : '!ERROR',
           lemma: token.lemma,
           pos: convert_pos(token.morphoCode)
         });
-        return lino.content.push({
+        lino.content.push({
           type: 'gap',
           text: ' '
         });
+        if (!(token.uri in tokens_index)) {
+          return console.warn('!ERROR - URI not found: ' + token.uri);
+        }
       });
-      if (i < data.sentences.sentence.length - 1) {
+      if (i < data.linguisticAnalysis.sentence.length - 1) {
         return lino.content.push({
           type: 'splitter',
           level: 'sentence'

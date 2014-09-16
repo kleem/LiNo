@@ -16,6 +16,11 @@ convert_pos = (morpho_code) ->
         when 'e' then 'exclamation'
         
 window.lino_reader_clavius = (data) ->
+    ### index uri references to tokens ###
+    tokens_index = {}
+    for token in data.tokenization.token
+        tokens_index[token.uri] = token
+        
     lino = {
         metadata: {
             title: data.title
@@ -27,14 +32,14 @@ window.lino_reader_clavius = (data) ->
         }]
     }
     
-    # for each sentence
-    data.sentences.sentence.forEach (sentence, i) ->
+    # for each sentence in linguistic analysis
+    data.linguisticAnalysis.sentence.forEach (sentence, i) ->
         # for each token
         sentence.token.forEach (token) ->
             # append a new token
             lino.content.push {
                 type: 'token',
-                text: token.text,
+                text: if token.uri of tokens_index then tokens_index[token.uri].text else '!ERROR',
                 lemma: token.lemma,
                 pos: convert_pos(token.morphoCode)
             }
@@ -44,8 +49,11 @@ window.lino_reader_clavius = (data) ->
                 text: ' '
             }
             
+            if token.uri not of tokens_index
+                console.warn '!ERROR - URI not found: ' + token.uri
+                
         # add a sentence splitter (if this is not the last sentence)
-        if i < data.sentences.sentence.length - 1
+        if i < data.linguisticAnalysis.sentence.length - 1
             lino.content.push {
                 type: 'splitter',
                 level: 'sentence'
