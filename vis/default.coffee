@@ -59,10 +59,13 @@ window.lino_vis_default_redraw = (container) ->
   poss = svg.selectAll('.pos')
     .data(lino.content.filter((item) -> item.pos?))
   
-  poss.enter().append('use')
+  enter_poss = poss.enter().append('use')
     .attr
       class: 'pos'
   
+  enter_poss.append('title')
+    .text((item) -> item.pos)
+    
   poss
     .attr
       'xlink:href': (item) -> "#pos_#{item.pos}"
@@ -103,11 +106,14 @@ window.lino_vis_default_redraw = (container) ->
   entities = svg.selectAll('.entity')
     .data(lino.entities)
     
-  entities.enter().append('g')
+  enter_entities = entities.enter().append('g')
     .attr
       class: 'entity'
       fill: (e) -> class_color(e.class)
       
+  enter_entities.append('title')
+    .text((e) -> if e.original_class? then e.original_class else e.class)
+    
   subentities = entities.selectAll('.subentity')
     .data((e) -> lino.content[lino.content.indexOf(e.tokens[0])..lino.content.indexOf(e.tokens[e.tokens.length-1])])
   

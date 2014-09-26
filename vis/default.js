@@ -31,7 +31,7 @@
   };
 
   window.lino_vis_default_redraw = function(container) {
-    var entities, html, lemmas, lino, poss, sentence_numbers, splitters, subentities, svg, tokens;
+    var enter_entities, enter_poss, entities, html, lemmas, lino, poss, sentence_numbers, splitters, subentities, svg, tokens;
     lino_vis_main_redraw(container);
     lino = container.datum();
     svg = container.select('svg');
@@ -63,8 +63,11 @@
     poss = svg.selectAll('.pos').data(lino.content.filter(function(item) {
       return item.pos != null;
     }));
-    poss.enter().append('use').attr({
+    enter_poss = poss.enter().append('use').attr({
       "class": 'pos'
+    });
+    enter_poss.append('title').text(function(item) {
+      return item.pos;
     });
     poss.attr({
       'xlink:href': function(item) {
@@ -115,10 +118,17 @@
       }
     });
     entities = svg.selectAll('.entity').data(lino.entities);
-    entities.enter().append('g').attr({
+    enter_entities = entities.enter().append('g').attr({
       "class": 'entity',
       fill: function(e) {
         return class_color(e["class"]);
+      }
+    });
+    enter_entities.append('title').text(function(e) {
+      if (e.original_class != null) {
+        return e.original_class;
+      } else {
+        return e["class"];
       }
     });
     subentities = entities.selectAll('.subentity').data(function(e) {
