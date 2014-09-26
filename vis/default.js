@@ -7,9 +7,9 @@
 
   token_thickness = 1;
 
-  pos_dx = 4;
+  pos_dx = 6.5;
 
-  pos_dy = 6;
+  pos_dy = 8.5;
 
   splitter_height = 58;
 
@@ -73,11 +73,11 @@
       'xlink:href': function(item) {
         return "#pos_" + item.pos;
       },
-      x: function(item) {
-        return item.bbox.left + token_gap + pos_dx;
-      },
-      y: function(item) {
-        return item.bbox.bottom + token_dy + token_thickness + pos_dy;
+      transform: function(item) {
+        var x, y;
+        x = item.bbox.left + token_gap + pos_dx;
+        y = item.bbox.bottom + token_dy + token_thickness + pos_dy;
+        return "translate(" + x + " " + y + ") scale(1.5)";
       }
     });
     splitters = svg.selectAll('.splitter').data(lino.content.filter(function(item) {

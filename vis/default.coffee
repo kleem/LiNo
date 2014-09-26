@@ -3,8 +3,8 @@ token_gap = 0 # distance between token underlines
 token_dy = 1 # distance between text and token underlines
 token_thickness = 1 # thickness of token and polarity underlines
 
-pos_dx = 4
-pos_dy = 6
+pos_dx = 6.5
+pos_dy = 8.5
 
 splitter_height = 58
 splitter_offset = 6
@@ -69,8 +69,10 @@ window.lino_vis_default_redraw = (container) ->
   poss
     .attr
       'xlink:href': (item) -> "#pos_#{item.pos}"
-      x: (item) -> item.bbox.left + token_gap + pos_dx
-      y: (item) -> item.bbox.bottom + token_dy + token_thickness + pos_dy
+      transform: (item) ->
+        x = item.bbox.left + token_gap + pos_dx
+        y = item.bbox.bottom + token_dy + token_thickness + pos_dy
+        return "translate(#{x} #{y}) scale(1.5)"
       
   # splitters
   splitters = svg.selectAll('.splitter')

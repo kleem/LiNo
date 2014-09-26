@@ -8,7 +8,7 @@
   line-height: 4em;
   
   font-family: Georgia;
-  font-size: 18px;
+  font-size: 24px;
   
   text-align: justify;
   margin: 12px;
@@ -23,11 +23,11 @@
   -webkit-ruby-position: after;
 }
 .token ruby > rb {
-  padding-bottom: 2px;
+  padding-bottom: 4px;
 }
 .token ruby > rt {
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   font-family: sans-serif;
   padding-left: 16px;
   padding-right: 16px;
