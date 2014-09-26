@@ -57,3 +57,23 @@
   margin-top: 22px;
   margin-bottom: 40px;
 }
+
+.entity {
+  fill-opacity: 0.15;
+}
+.entity:hover {
+  fill-opacity: 0.5;
+}
+
+.debug {
+  font-size: 8px;
+  font-family: sans-serif;
+  fill: black;
+  text-anchor: middle;
+}
+.debug_bbox {
+  fill: yellow;
+  fill-opacity: 0.2;
+  stroke: orange;
+  stroke-width: 1px;
+}

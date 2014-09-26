@@ -1,5 +1,5 @@
 (function() {
-  var pos_dx, pos_dy, splitter_height, splitter_offset, token_dy, token_gap, token_thickness;
+  var class_color, pos_dx, pos_dy, splitter_height, splitter_offset, token_dy, token_gap, token_thickness;
 
   token_gap = 0;
 
@@ -15,9 +15,14 @@
 
   splitter_offset = 6;
 
+  class_color = d3.scale.ordinal().domain(['person', 'organization', 'place', 'work', 'time', 'other']).range(['#E14E5F', '#A87621', '#43943E', '#AC5CC4', '#2986EC', '#7E7F7E']);
+
   window.lino_vis_default_new = function(lino, container, title_container) {
     title_container.classed('lino_header', true);
     title_container.text(lino.metadata.title);
+    lino.entities.sort(function(a, b) {
+      return b.tokens.length - a.tokens.length;
+    });
     lino_vis_main_new(lino, container);
     lino_vis_default_redraw(container);
     return window.onresize = function() {
@@ -26,7 +31,7 @@
   };
 
   window.lino_vis_default_redraw = function(container) {
-    var html, lemmas, lino, poss, sentence_numbers, splitters, svg, tokens;
+    var entities, html, lemmas, lino, poss, sentence_numbers, splitters, subentities, svg, tokens;
     lino_vis_main_redraw(container);
     lino = container.datum();
     svg = container.select('svg');
@@ -99,7 +104,7 @@
     sentence_numbers.enter().append('text').attr({
       "class": 'sentence_number'
     });
-    return sentence_numbers.text(function(splitter, i) {
+    sentence_numbers.text(function(splitter, i) {
       return i + 1;
     }).attr({
       x: function(item) {
@@ -107,6 +112,33 @@
       },
       y: function(item) {
         return item.bbox.top - 5;
+      }
+    });
+    entities = svg.selectAll('.entity').data(lino.entities);
+    entities.enter().append('g').attr({
+      "class": 'entity',
+      fill: function(e) {
+        return class_color(e["class"]);
+      }
+    });
+    subentities = entities.selectAll('.subentity').data(function(e) {
+      return lino.content.slice(lino.content.indexOf(e.tokens[0]), lino.content.indexOf(e.tokens[e.tokens.length - 1]) + 1 || 9e9);
+    });
+    subentities.enter().append('rect').attr({
+      "class": 'subentity'
+    });
+    return subentities.attr({
+      x: function(se) {
+        return se.bbox.left;
+      },
+      y: function(se) {
+        return se.bbox.top;
+      },
+      width: function(se) {
+        return se.bbox.width;
+      },
+      height: function(se) {
+        return se.bbox.height;
       }
     });
   };
